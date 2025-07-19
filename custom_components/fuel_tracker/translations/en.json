@@ -1,0 +1,62 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Set a name for what you want to track.",
+                "data": {
+                    "name": "Name"
+                }
+            }
+        },
+        "error": {
+            "unknown": "Unknown error occurred."
+        },
+        "abort": {
+            "already_configured": "This entry is already configured."
+        }
+    },
+    "services": {
+        "refuel": {
+            "name": "Refuel",
+            "description": "Add fuel and optionally cost to the tracker.",
+            "fields": {
+                "amount": {
+                    "name": "Amount",
+                    "description": "Amount of fuel added."
+                },
+                "cost": {
+                    "name": "Cost",
+                    "description": "Cost of the fuel added."
+                }
+            }
+        },
+        "calibrate": {
+            "name": "Calibrate",
+            "description": "Set the sensor to a specific value.",
+            "fields": {
+                "value": {
+                    "name": "Value",
+                    "description": "Value to calibrate the sensor to."
+                }
+            }
+        },
+        "reset": {
+            "name": "Reset",
+            "description": "Reset the sensor to zero."
+        },
+        "rollback": {
+            "name": "Rollback",
+            "description": "Undo the last operation (up to 10 steps)."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "fuel_tracker": {
+                "name": "{name} Volume"
+            },
+            "cost_tracker": {
+                "name": "{name} Cost"
+            }
+        }
+    }
+}

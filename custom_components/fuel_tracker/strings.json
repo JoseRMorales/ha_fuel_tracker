@@ -1,0 +1,62 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Establece un nombre para lo que deseas hacer seguimiento.",
+                "data": {
+                    "name": "Nombre"
+                }
+            }
+        },
+        "error": {
+            "unknown": "Ocurrió un error desconocido."
+        },
+        "abort": {
+            "already_configured": "Esta entrada ya está configurada."
+        }
+    },
+    "services": {
+        "refuel": {
+            "name": "Repostar",
+            "description": "Añade combustible y el coste.",
+            "fields": {
+                "amount": {
+                    "name": "Cantidad",
+                    "description": "Cantidad de combustible añadido."
+                },
+                "cost": {
+                    "name": "Costo",
+                    "description": "Costo del combustible añadido."
+                }
+            }
+        },
+        "calibrate": {
+            "name": "Calibrar",
+            "description": "Establece el sensor a un valor específico.",
+            "fields": {
+                "value": {
+                    "name": "Valor",
+                    "description": "Valor al que calibrar el sensor."
+                }
+            }
+        },
+        "reset": {
+            "name": "Restablecer",
+            "description": "Restablece el sensor a cero."
+        },
+        "rollback": {
+            "name": "Revertir",
+            "description": "Deshace la última operación (hasta 10 pasos)."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "fuel_tracker": {
+                "name": "{name} Volumen"
+            },
+            "cost_tracker": {
+                "name": "{name} Coste"
+            }
+        }
+    }
+}

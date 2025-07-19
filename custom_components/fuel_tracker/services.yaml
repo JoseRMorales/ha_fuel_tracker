@@ -1,0 +1,45 @@
+reset:
+  target:
+    entity:
+      domain: sensor
+      integration: fuel_tracker
+
+refuel:
+  target:
+    entity:
+      domain: sensor
+      integration: fuel_tracker
+  fields:
+    fuel:
+      example: "50"
+      required: true
+      selector:
+        text:
+    cost:
+      example: "50"
+      required: true
+      selector:
+        text:
+
+calibrate:
+  target:
+    entity:
+      domain: sensor
+      integration: fuel_tracker
+  fields:
+    fuel:
+      example: "50"
+      required: false
+      selector:
+        text:
+    cost:
+      example: "50"
+      required: false
+      selector:
+        text:
+
+rollback:
+  target:
+    entity:
+      domain: sensor
+      integration: fuel_tracker

@@ -1,0 +1,23 @@
+{
+    "entity": {
+        "sensor": {
+            "fuel_tracker": {
+                "default": "mdi:fuel-station"
+            }
+        }
+    },
+    "services": {
+        "reset": {
+            "service": "mdi:numeric-0-box-outline"
+        },
+        "calibrate": {
+            "service": "mdi:auto-fix"
+        },
+        "refuel": {
+            "service": "mdi:gas-station"
+        },
+        "rollback": {
+            "service": "mdi:file-undo"
+        }
+    }
+}
