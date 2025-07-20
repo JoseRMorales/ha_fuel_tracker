@@ -3,7 +3,7 @@
 Track your vehicle's fuel usage and costs directly in Home Assistant! This integration provides sensors and services to help you monitor refueling, calibrate values, reset, and roll back changes, making it easy to keep tabs on your fuel consumption and spending.
 
 ## Features
-- **Fuel and Cost Tracking:** Monitors total fuel added nd total cost.
+- **Fuel and Cost Tracking:** Monitors total fuel added and total cost.
 - **History and Rollback:** Keeps a history of changes for both sensors, allowing you to roll back to previous values.
 - **Services:**
   - `refuel`: Add new fuel and/or cost entries.
