@@ -15,6 +15,10 @@ Track your vehicle's fuel usage and costs directly in Home Assistant! This integ
 ## Installation
 
 ### HACS (Recommended)
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=JoseRMorales&category=Integration&repository=ha_fuel_tracker)
+
+Alternatively, you can install this integration manually by following the steps below.
 1. Go to HACS > Integrations > Custom Repositories.
 2. Add this repository: `https://github.com/JoseRMorales/ha_fuel_tracker` as an integration.
 3. Install **Fuel Tracker** from HACS.
