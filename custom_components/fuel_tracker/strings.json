@@ -2,60 +2,60 @@
     "config": {
         "step": {
             "user": {
-                "description": "Establece un nombre para lo que deseas hacer seguimiento.",
+                "description": "Set a name for what you want to track.",
                 "data": {
-                    "name": "Nombre"
+                    "name": "Name"
                 }
             }
         },
         "error": {
-            "unknown": "Ocurrió un error desconocido."
+            "unknown": "Unknown error occurred."
         },
         "abort": {
-            "already_configured": "Esta entrada ya está configurada."
+            "already_configured": "This entry is already configured."
         }
     },
     "services": {
         "refuel": {
-            "name": "Repostar",
-            "description": "Añade combustible y el coste.",
+            "name": "Refuel",
+            "description": "Add fuel and optionally cost to the tracker.",
             "fields": {
-                "amount": {
-                    "name": "Cantidad",
-                    "description": "Cantidad de combustible añadido."
+                "fuel": {
+                    "name": "Fuel",
+                    "description": "Amount of fuel added."
                 },
                 "cost": {
-                    "name": "Costo",
-                    "description": "Costo del combustible añadido."
+                    "name": "Cost",
+                    "description": "Cost of the fuel added."
                 }
             }
         },
         "calibrate": {
-            "name": "Calibrar",
-            "description": "Establece el sensor a un valor específico.",
+            "name": "Calibrate",
+            "description": "Set the sensor to a specific value.",
             "fields": {
                 "value": {
-                    "name": "Valor",
-                    "description": "Valor al que calibrar el sensor."
+                    "name": "Value",
+                    "description": "Value to calibrate the sensor to."
                 }
             }
         },
         "reset": {
-            "name": "Restablecer",
-            "description": "Restablece el sensor a cero."
+            "name": "Reset",
+            "description": "Reset the sensor to zero."
         },
         "rollback": {
-            "name": "Revertir",
-            "description": "Deshace la última operación (hasta 10 pasos)."
+            "name": "Rollback",
+            "description": "Undo the last operation (up to 10 steps)."
         }
     },
     "entity": {
         "sensor": {
             "fuel_tracker": {
-                "name": "{name} Volumen"
+                "name": "{name} Volume"
             },
             "cost_tracker": {
-                "name": "{name} Coste"
+                "name": "{name} Cost"
             }
         }
     }

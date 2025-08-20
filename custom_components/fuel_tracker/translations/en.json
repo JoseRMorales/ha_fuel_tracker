@@ -20,8 +20,8 @@
             "name": "Refuel",
             "description": "Add fuel and optionally cost to the tracker.",
             "fields": {
-                "amount": {
-                    "name": "Amount",
+                "fuel": {
+                    "name": "Fuel",
                     "description": "Amount of fuel added."
                 },
                 "cost": {

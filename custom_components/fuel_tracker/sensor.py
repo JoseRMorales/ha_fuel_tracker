@@ -132,7 +132,9 @@ class CostTrackerSensor(RestoreSensor):
         self._attr_native_value = Decimal("0.0")
         self.async_write_ha_state()
 
-    async def async_refuel(self, _: str | None = None, cost: str | None = None) -> None:
+    async def async_refuel(
+        self, fuel: str | None = None, cost: str | None = None
+    ) -> None:
         """Update the sensor state."""
         if not cost:
             msg = "Cost is required for cost refuel"
@@ -147,9 +149,7 @@ class CostTrackerSensor(RestoreSensor):
         self._attr_native_value = current_value + Decimal(cost)
         self.async_write_ha_state()
 
-    async def async_calibrate(
-        self, _: str | None = None, cost: str | None = None
-    ) -> None:
+    async def async_calibrate(self, cost: str | None = None) -> None:
         """Update the sensor state."""
         if not cost:
             msg = "Cost is required for cost calibration"
@@ -226,7 +226,7 @@ class FuelTrackerSensor(RestoreSensor):
         self._attr_native_value = Decimal("0.0")
         self.async_write_ha_state()
 
-    async def async_refuel(self, fuel: str | None = None, _: str | None = None) -> None:
+    async def async_refuel(self, fuel: str | None = None) -> None:
         """Update the sensor state."""
         if not fuel:
             msg = "Fuel is required for fuel refuel"
@@ -242,7 +242,7 @@ class FuelTrackerSensor(RestoreSensor):
         self.async_write_ha_state()
 
     async def async_calibrate(
-        self, fuel: str | None = None, _: str | None = None
+        self, fuel: str | None = None, cost: str | None = None
     ) -> None:
         """Update the sensor state."""
         if not fuel:

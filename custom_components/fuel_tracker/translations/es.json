@@ -20,12 +20,12 @@
             "name": "Repostar",
             "description": "Añade combustible y el coste.",
             "fields": {
-                "amount": {
-                    "name": "Cantidad",
+                "fuel": {
+                    "name": "Combustible",
                     "description": "Cantidad de combustible añadido."
                 },
                 "cost": {
-                    "name": "Costo",
+                    "name": "Coste",
                     "description": "Coste del combustible añadido."
                 }
             }
