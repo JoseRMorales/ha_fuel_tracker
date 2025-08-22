@@ -151,7 +151,7 @@ class CostTrackerSensor(RestoreSensor):
     ) -> None:
         """Update the sensor state."""
         if not cost:
-            msg = "Cost is required for cost refuel"
+            msg = "Cost is required for refuel"
             raise HomeAssistantError(msg)
         self._store_current_value()
         current_value = self._attr_native_value
@@ -163,10 +163,12 @@ class CostTrackerSensor(RestoreSensor):
         self._attr_native_value = current_value + Decimal(cost)
         self.async_write_ha_state()
 
-    async def async_calibrate(self, cost: str | None = None) -> None:
+    async def async_calibrate(
+        self, fuel: str | None = None, cost: str | None = None
+    ) -> None:
         """Update the sensor state."""
         if not cost:
-            msg = "Cost is required for cost calibration"
+            msg = "Cost is required for calibration"
             raise HomeAssistantError(msg)
         self._store_current_value()
         self._attr_native_value = Decimal(cost)
@@ -250,10 +252,12 @@ class FuelTrackerSensor(RestoreSensor):
         self._attr_native_value = Decimal("0.0")
         self.async_write_ha_state()
 
-    async def async_refuel(self, fuel: str | None = None) -> None:
+    async def async_refuel(
+        self, fuel: str | None = None, cost: str | None = None
+    ) -> None:
         """Update the sensor state."""
         if not fuel:
-            msg = "Fuel is required for fuel refuel"
+            msg = "Fuel is required for refuel"
             raise HomeAssistantError(msg)
         self._store_current_value()
         current_value = self._attr_native_value
@@ -270,7 +274,7 @@ class FuelTrackerSensor(RestoreSensor):
     ) -> None:
         """Update the sensor state."""
         if not fuel:
-            msg = "Fuel is required for fuel calibration"
+            msg = "Fuel is required for calibration"
             raise HomeAssistantError(msg)
         self._store_current_value()
         self._attr_native_value = Decimal(fuel)
