@@ -37,9 +37,13 @@
             "name": "Calibrate",
             "description": "Set the sensor to a specific value.",
             "fields": {
-                "value": {
-                    "name": "Value",
-                    "description": "Value to calibrate the sensor to."
+                "fuel": {
+                    "name": "Fuel",
+                    "description": "Amount of fuel."
+                },
+                "cost": {
+                    "name": "Cost",
+                    "description": "Cost of fuel."
                 }
             }
         },
