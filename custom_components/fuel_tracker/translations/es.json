@@ -2,13 +2,16 @@
     "config": {
         "step": {
             "user": {
-                "description": "Establece un nombre para lo que deseas hacer seguimiento de volumen y coste.",
+                "description": "Establece un nombre y valores iniciales opcionales.",
                 "data": {
-                    "name": "Nombre"
+                    "name": "Nombre",
+                    "cost": "Coste Inicial",
+                    "fuel": "Combustible Inicial"
                 }
             }
         },
         "error": {
+            "invalid_number": "Por favor, introduce un número válido.",
             "unknown": "Ocurrió un error desconocido."
         },
         "abort": {

@@ -2,32 +2,49 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, cast
+from decimal import Decimal
 
 import voluptuous as vol
-from homeassistant.helpers import selector
-from homeassistant.helpers.schema_config_entry_flow import (
-    SchemaConfigFlowHandler,
-    SchemaFlowFormStep,
+from homeassistant import config_entries
+
+from .const import CONF_COST, CONF_FUEL, CONF_NAME, DOMAIN
+
+DATA_SCHEMA = vol.Schema(
+    {
+        vol.Required(CONF_NAME): str,
+        vol.Optional(CONF_COST, default="0"): str,
+        vol.Optional(CONF_FUEL, default="0"): str,
+    }
 )
 
-from .const import CONF_NAME, DOMAIN
 
-if TYPE_CHECKING:
-    from collections.abc import Mapping
-
-CONFIG_SCHEMA = vol.Schema({vol.Required(CONF_NAME): selector.TextSelector()})
-
-CONFIG_FLOW = {"user": SchemaFlowFormStep(CONFIG_SCHEMA)}
-
-
-class ConfigFlowHandler(SchemaConfigFlowHandler, domain=DOMAIN):
-    """Handle a config flow for Fuel Tracker integration."""
+class FuelTrackerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for Fuel Tracker."""
 
     VERSION = 1
 
-    config_flow = CONFIG_FLOW
-
-    def async_config_entry_title(self, options: Mapping[str, Any]) -> str:
-        """Return config entry title."""
-        return cast("str", options[CONF_NAME])
+    async def async_step_user(self, user_input: dict | None = None) -> None:
+        """Handle a flow initialized by the user."""
+        errors = {}
+        if user_input is not None:
+            for key in (CONF_COST, CONF_FUEL):
+                try:
+                    Decimal(str(user_input.get(key, "0")))
+                except Exception:  # noqa: BLE001
+                    errors[key] = "invalid_number"
+            if not errors:
+                await self.async_set_unique_id(user_input[CONF_NAME])
+                self._abort_if_unique_id_configured()
+                return self.async_create_entry(
+                    title=user_input[CONF_NAME],
+                    data={
+                        CONF_NAME: user_input[CONF_NAME],
+                        CONF_COST: user_input.get(CONF_COST),
+                        CONF_FUEL: user_input.get(CONF_FUEL),
+                    },
+                )
+        return self.async_show_form(
+            step_id="user",
+            data_schema=DATA_SCHEMA,
+            errors=errors,
+        )

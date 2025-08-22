@@ -60,8 +60,11 @@ async def async_setup_entry(
     entry_name = config_entry.title
     entry_id = config_entry.entry_id
 
-    cost_tracker_sensor = CostTrackerSensor(entry_name, entry_id)
-    fuel_tracker_sensor = FuelTrackerSensor(entry_name, entry_id)
+    init_cost = config_entry.data.get(CONF_COST)
+    init_fuel = config_entry.data.get(CONF_FUEL)
+
+    cost_tracker_sensor = CostTrackerSensor(entry_name, entry_id, init_cost)
+    fuel_tracker_sensor = FuelTrackerSensor(entry_name, entry_id, init_fuel)
     async_add_entities([cost_tracker_sensor, fuel_tracker_sensor])
 
     platform = entity_platform.async_get_current_platform()
@@ -103,10 +106,21 @@ class CostTrackerSensor(RestoreSensor):
     _attr_state_class = SensorStateClass.TOTAL
     _attr_has_entity_name = True
 
-    def __init__(self, name: str, unique_id: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        unique_id: str,
+        initial_value: str | None = None,
+    ) -> None:
         """Initialize the cost tracker sensor."""
         self._attr_unique_id = f"{unique_id}_{CONF_COST}"
-        self._attr_native_value = Decimal("0.0")
+        if initial_value is not None:
+            try:
+                self._attr_native_value = Decimal(str(initial_value))
+            except Exception:  # noqa: BLE001
+                self._attr_native_value = Decimal("0.0")
+        else:
+            self._attr_native_value = Decimal("0.0")
         self._value_history = deque(maxlen=MAX_HISTORY_SIZE)
         self.translation_placeholders = {
             "name": name,
@@ -198,9 +212,19 @@ class FuelTrackerSensor(RestoreSensor):
     _attr_icon = "mdi:gas-station"
     _attr_has_entity_name = True
 
-    def __init__(self, name: str, entry_id: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        entry_id: str,
+        initial_value: str | None = None,
+    ) -> None:
         """Initialize the fuel tracker sensor."""
         self._attr_unique_id = f"{entry_id}_{CONF_FUEL}"
+        if initial_value is not None:
+            try:
+                self._attr_native_value = Decimal(str(initial_value))
+            except Exception:  # noqa: BLE001
+                self._attr_native_value = Decimal("0.0")
         self._value_history = deque(maxlen=MAX_HISTORY_SIZE)
         self.translation_placeholders = {
             "name": name,

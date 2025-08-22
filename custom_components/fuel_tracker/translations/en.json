@@ -2,13 +2,16 @@
     "config": {
         "step": {
             "user": {
-                "description": "Set a name for what you want to track.",
+                "description": "Set a name and optional initial values.",
                 "data": {
-                    "name": "Name"
+                    "name": "Name",
+                    "cost": "Initial Cost",
+                    "fuel": "Initial Fuel"
                 }
             }
         },
         "error": {
+            "invalid_number": "Please enter a valid number.",
             "unknown": "Unknown error occurred."
         },
         "abort": {
