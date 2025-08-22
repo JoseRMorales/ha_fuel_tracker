@@ -1,7 +1,7 @@
 """Fuel Tracker sensors."""
 
 from collections import deque
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from typing import Any
 
 import voluptuous as vol
@@ -130,6 +130,23 @@ class CostTrackerSensor(RestoreSensor):
         """Handle entity being added to Home Assistant."""
         await super().async_added_to_hass()
 
+        try:
+            last_data = await self.async_get_last_sensor_data()
+            if last_data is not None and last_data.native_value is not None:
+                self._attr_native_value = Decimal(str(last_data.native_value))
+                LOGGER.debug(
+                    "Restored cost sensor %s value to %s",
+                    self._attr_unique_id,
+                    self._attr_native_value,
+                )
+        except (InvalidOperation, ValueError) as err:
+            LOGGER.warning(
+                "Failed to restore cost sensor %s value: %s",
+                self._attr_unique_id,
+                err,
+            )
+        self.async_write_ha_state()
+
     def _store_current_value(self) -> None:
         """Store the current value in history before making changes."""
         if self._attr_native_value is not None:
@@ -235,6 +252,23 @@ class FuelTrackerSensor(RestoreSensor):
     async def async_added_to_hass(self) -> None:
         """Handle entity which will be added."""
         await super().async_added_to_hass()
+
+        try:
+            last_data = await self.async_get_last_sensor_data()
+            if last_data is not None and last_data.native_value is not None:
+                self._attr_native_value = Decimal(str(last_data.native_value))
+                LOGGER.debug(
+                    "Restored fuel sensor %s value to %s",
+                    self._attr_unique_id,
+                    self._attr_native_value,
+                )
+        except (InvalidOperation, ValueError) as err:
+            LOGGER.warning(
+                "Failed to restore fuel sensor %s value: %s",
+                self._attr_unique_id,
+                err,
+            )
+        self.async_write_ha_state()
 
     def _store_current_value(self) -> None:
         """Store the current value in history before making changes."""
