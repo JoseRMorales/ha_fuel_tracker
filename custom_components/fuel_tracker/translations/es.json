@@ -6,22 +6,41 @@
                 "data": {
                     "name": "Nombre",
                     "cost": "Coste Inicial",
-                    "fuel": "Combustible Inicial"
+                    "fuel": "Combustible Inicial",
+                    "device_type": "Tipo de Vehículo"
                 }
             }
         },
         "error": {
-            "invalid_number": "Por favor, introduce un número válido.",
-            "unknown": "Ocurrió un error desconocido."
+            "invalid_number": "Por favor introduce un número válido.",
+            "unknown": "Ha ocurrido un error desconocido."
         },
         "abort": {
             "already_configured": "Esta entrada ya está configurada."
         }
     },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "device_type": "Tipo de Vehículo"
+                }
+            }
+        }
+    },
+    "selector": {
+        "device_type": {
+            "options": {
+                "fuel": "Combustible",
+                "ev": "Eléctrico",
+                "weight": "Biomasa"
+            }
+        }
+    },
     "services": {
         "refuel": {
             "name": "Repostar",
-            "description": "Añade combustible y el coste.",
+            "description": "Añadir combustible y coste.",
             "fields": {
                 "fuel": {
                     "name": "Combustible",
@@ -35,31 +54,37 @@
         },
         "calibrate": {
             "name": "Calibrar",
-            "description": "Establece el sensor a un valor específico.",
+            "description": "Establecer el sensor a un valor específico.",
             "fields": {
                 "fuel": {
-                    "name": "Fuel",
+                    "name": "Combustible",
                     "description": "Cantidad de combustible."
                 },
                 "cost": {
-                    "name": "Cost",
+                    "name": "Coste",
                     "description": "Coste del combustible."
                 }
             }
         },
         "reset": {
-            "name": "Restablecer",
-            "description": "Restablece el sensor a cero."
+            "name": "Reiniciar",
+            "description": "Reiniciar el sensor a cero."
         },
         "rollback": {
-            "name": "Revertir",
-            "description": "Deshace la última operación (si el historial está disponible)."
+            "name": "Deshacer",
+            "description": "Deshacer la última operación (hasta 10 pasos)."
         }
     },
     "entity": {
         "sensor": {
             "fuel_tracker": {
                 "name": "{name} Volumen"
+            },
+            "energy_tracker": {
+                "name": "{name} Energía"
+            },
+            "weight_tracker": {
+                "name": "{name} Peso"
             },
             "cost_tracker": {
                 "name": "{name} Coste"

@@ -11,7 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import UnitOfVolume
+from homeassistant.const import UnitOfEnergy, UnitOfMass, UnitOfVolume
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_platform
@@ -20,7 +20,11 @@ from homeassistant.helpers.template import is_number
 
 from .const import (
     CONF_COST,
+    CONF_DEVICE_TYPE,
     CONF_FUEL,
+    DEVICE_TYPE_EV,
+    DEVICE_TYPE_FUEL,
+    DEVICE_TYPE_WEIGHT,
     LOGGER,
     SERVICE_CALIBRATE,
     SERVICE_REFUEL,
@@ -62,9 +66,12 @@ async def async_setup_entry(
 
     init_cost = config_entry.data.get(CONF_COST)
     init_fuel = config_entry.data.get(CONF_FUEL)
+    device_type = config_entry.data.get(CONF_DEVICE_TYPE, DEVICE_TYPE_FUEL)
 
     cost_tracker_sensor = CostTrackerSensor(entry_name, entry_id, init_cost)
-    fuel_tracker_sensor = FuelTrackerSensor(entry_name, entry_id, init_fuel)
+    fuel_tracker_sensor = FuelTrackerSensor(
+        entry_name, entry_id, device_type, init_fuel
+    )
     async_add_entities([cost_tracker_sensor, fuel_tracker_sensor])
 
     platform = entity_platform.async_get_current_platform()
@@ -222,23 +229,36 @@ class CostTrackerSensor(RestoreSensor):
 class FuelTrackerSensor(RestoreSensor):
     """Representation of a fuel sensor."""
 
-    _attr_translation_key = "fuel_tracker"
     _attr_should_poll = False
-    _attr_native_unit_of_measurement = UnitOfVolume.LITERS
-    _attr_device_class = SensorDeviceClass.VOLUME
     _attr_state_class = SensorStateClass.TOTAL_INCREASING
     _attr_native_value = Decimal("0.0")
-    _attr_icon = "mdi:gas-station"
     _attr_has_entity_name = True
 
     def __init__(
         self,
         name: str,
         entry_id: str,
+        device_type: str,
         initial_value: str | None = None,
     ) -> None:
         """Initialize the fuel tracker sensor."""
         self._attr_unique_id = f"{entry_id}_{CONF_FUEL}"
+        if device_type == DEVICE_TYPE_EV:
+            self._attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+            self._attr_device_class = SensorDeviceClass.ENERGY
+            self._attr_icon = "mdi:ev-station"
+            self._attr_translation_key = "energy_tracker"
+        elif device_type == DEVICE_TYPE_WEIGHT:
+            self._attr_native_unit_of_measurement = UnitOfMass.KILOGRAMS
+            self._attr_device_class = SensorDeviceClass.WEIGHT
+            self._attr_icon = "mdi:weight-kilogram"
+            self._attr_translation_key = "weight_tracker"
+        else:
+            self._attr_native_unit_of_measurement = UnitOfVolume.LITERS
+            self._attr_device_class = SensorDeviceClass.VOLUME
+            self._attr_icon = "mdi:gas-station"
+            self._attr_translation_key = "fuel_tracker"
+
         if initial_value is not None:
             try:
                 self._attr_native_value = Decimal(str(initial_value))

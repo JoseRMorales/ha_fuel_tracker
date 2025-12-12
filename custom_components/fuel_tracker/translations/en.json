@@ -6,7 +6,8 @@
                 "data": {
                     "name": "Name",
                     "cost": "Initial Cost",
-                    "fuel": "Initial Fuel"
+                    "fuel": "Initial Fuel",
+                    "device_type": "Vehicle Type"
                 }
             }
         },
@@ -16,6 +17,24 @@
         },
         "abort": {
             "already_configured": "This entry is already configured."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "device_type": "Vehicle Type"
+                }
+            }
+        }
+    },
+    "selector": {
+        "device_type": {
+            "options": {
+                "fuel": "Fuel",
+                "ev": "Electric",
+                "weight": "Biomass"
+            }
         }
     },
     "services": {
@@ -60,6 +79,12 @@
         "sensor": {
             "fuel_tracker": {
                 "name": "{name} Volume"
+            },
+            "energy_tracker": {
+                "name": "{name} Energy"
+            },
+            "weight_tracker": {
+                "name": "{name} Weight"
             },
             "cost_tracker": {
                 "name": "{name} Cost"
