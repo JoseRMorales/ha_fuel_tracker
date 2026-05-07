@@ -16,7 +16,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.template import is_number
 
 from .const import (
     CONF_COST,
@@ -46,13 +45,15 @@ class FuelTrackerValidationError(vol.Invalid):
 
 def validate_number(value: Any) -> str:
     """Validate value is a number and is greater than 0."""
-    if not is_number(value):
+    try:
+        val = Decimal(str(value))
+    except (ValueError, TypeError, InvalidOperation):
         msg = "Value is not a number"
         raise FuelTrackerValidationError(value, msg)
-    if Decimal(value) <= 0:
+    if val <= 0:
         msg = "Value is not greater than 0"
         raise FuelTrackerValidationError(value, msg)
-    return value
+    return str(value)
 
 
 async def async_setup_entry(
