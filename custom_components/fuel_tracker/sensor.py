@@ -47,9 +47,9 @@ def validate_number(value: Any) -> str:
     """Validate value is a number and is greater than 0."""
     try:
         val = Decimal(str(value))
-    except (ValueError, TypeError, InvalidOperation):
+    except (ValueError, TypeError, InvalidOperation) as err:
         msg = "Value is not a number"
-        raise FuelTrackerValidationError(value, msg)
+        raise FuelTrackerValidationError(value, msg) from err
     if val <= 0:
         msg = "Value is not greater than 0"
         raise FuelTrackerValidationError(value, msg)
